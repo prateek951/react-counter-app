@@ -1,22 +1,37 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-  state = {
-    count: 0,
-    imageUrl: "https://picsum.photos/200"
+  constructor() {
+    super();
+    console.log("[counter] inside the constructor method");
+    this.state = {
+      count: 0,
+      imageUrl: "https://picsum.photos/200",
+      tags: ["tag1", "tag2", "tag3"]
+    };
+    this.bindEvents();
+  }
+  bindEvents = () => {
+    this.handleReset = this.handleReset.bind(this);
   };
-  handleIncrement = () => this.setState({ count: this.state.count + 1 });
-
+  handleIncrement = () => {
+    console.log("[counter] Inside the handleIncrement method");
+    const { count } = this.state;
+    this.setState({ count: count + 1 });
+  };
   handleDecrement = () => {
     const { count } = this.state;
+    console.log("[counter] Inside the handleDecrement method");
     if (count === 0) {
       return;
     } else {
-      this.setState({ count: this.state.count - 1 });
+      this.setState({ count: count - 1 });
     }
   };
-  handleReset = () => this.setState({ count: 0 });
-
+  handleReset() {
+    console.log("[counter] Inside the handleReset method");
+    this.setState({ count: 0 });
+  }
   formatCount = () => {
     const { count } = this.state;
     return count === 0 ? "Zero" : "Decrement";
@@ -26,15 +41,25 @@ class Counter extends Component {
     fontWeight: "bold"
   };
   getBadgeClasses = () => {
-        let classes = "badge m-2 p-2 badge-";
-        classes += (this.state.count === 0) ? "danger" : "success";
-        return classes;
-  }
+    let classes = "badge m-2 p-2 badge-";
+    classes += this.state.count === 0 ? "danger" : "success";
+    return classes;
+  };
+
+  renderTags = () => {
+    const { tags } = this.state;
+    return tags && tags.length !== 0 ? (
+      tags.map((tag, index) => <li key={index}>{tag}</li>)
+    ) : (
+      <p>There are no tags in the list!</p>
+    );
+  };
+
   render() {
     //JSX expressions must have one parent element
     //   React.createElement('div')
-    const { count, imageUrl } = this.state;
-    
+    const { count, imageUrl, tags } = this.state;
+
     return (
       <div>
         <div className="text-center">
@@ -44,6 +69,10 @@ class Counter extends Component {
         </div>
         <img src={imageUrl} alt="" />
         <h1 className="text-center">Hello World</h1>
+        <ul>
+          {tags.length === 0 && "Please create a new tag"}
+          {this.renderTags()}
+        </ul>
         <button
           className="btn btn-primary btn-sm"
           onClick={this.handleIncrement}
@@ -63,11 +92,11 @@ class Counter extends Component {
     );
   }
 
-    getBadgeClasses(count) {
-        let classes = "badge m-2 p-2 badge-";
-        classes += (count === 0) ? "danger" : "success";
-        return classes;
-    }
+  getBadgeClasses(count) {
+    let classes = "badge m-2 p-2 badge-";
+    classes += count === 0 ? "danger" : "success";
+    return classes;
+  }
 }
 
 export default Counter;
