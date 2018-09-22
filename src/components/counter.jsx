@@ -40,11 +40,6 @@ class Counter extends Component {
     fontSize: 50,
     fontWeight: "bold"
   };
-  getBadgeClasses = () => {
-    let classes = "badge m-2 p-2 badge-";
-    classes += this.state.count === 0 ? "danger" : "success";
-    return classes;
-  };
 
   renderTags = () => {
     const { tags } = this.state;
@@ -63,7 +58,7 @@ class Counter extends Component {
     return (
       <div>
         <div className="text-center">
-          <h1 style={this.styles} className={this.getBadgeClasses()}>
+          <h1 style={this.styles} className={this.getBadgeClasses(count)}>
             {count}
           </h1>
         </div>
