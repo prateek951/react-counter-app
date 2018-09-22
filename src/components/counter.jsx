@@ -1,18 +1,10 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-  constructor() {
-    super();
-    console.log("[counter] inside the constructor method");
-    this.state = {
-      count: 0,
-      imageUrl: "https://picsum.photos/200",
-      tags: ["tag1", "tag2", "tag3"]
-    };
-    this.bindEvents();
-  }
-  bindEvents = () => {
-    this.handleReset = this.handleReset.bind(this);
+  state = {
+    count: this.props.count,
+    imageUrl: "https://picsum.photos/200",
+    tags: ["tag1", "tag2", "tag3"]
   };
   handleIncrement = () => {
     console.log("[counter] Inside the handleIncrement method");
@@ -28,10 +20,10 @@ class Counter extends Component {
       this.setState({ count: count - 1 });
     }
   };
-  handleReset() {
+  handleReset = () => {
     console.log("[counter] Inside the handleReset method");
     this.setState({ count: 0 });
-  }
+  };
   formatCount = () => {
     const { count } = this.state;
     return count === 0 ? "Zero" : "Decrement";
@@ -54,10 +46,12 @@ class Counter extends Component {
     //JSX expressions must have one parent element
     //   React.createElement('div')
     const { count, imageUrl, tags } = this.state;
-
+    const { children } = this.props;
+    console.log("[Counter] Counters => Props => Counter", this.props);
     return (
       <div>
         <div className="text-center">
+          {children}
           <h1 style={this.styles} className={this.getBadgeClasses(count)}>
             {count}
           </h1>
