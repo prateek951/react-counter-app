@@ -13,12 +13,17 @@ export default class Counters extends Component {
       { id: 4, value: 0 }
     ]
   };
+  handleDelete = (id) => {
+    console.log('Event handler called');
+    const counters = this.state.counters.filter(c => c.id !== id);
+    this.setState({counters});
+    }
 
   render() {
     const { counters } = this.state;
     return (
       <div>
-        {counters.map(counter => <Counter key={counter.id} count={counter.value}>
+        {counters.map(counter => <Counter key={counter.id}  handleDelete={this.handleDelete} counter={counter}>
             <h4>Counter #{counter.id}</h4>
         </Counter>)}
       </div>

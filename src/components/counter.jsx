@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class Counter extends Component {
   state = {
-    count: this.props.count,
+    count: this.props.counter.value,
     imageUrl: "https://picsum.photos/200",
     tags: ["tag1", "tag2", "tag3"]
   };
@@ -24,6 +24,7 @@ class Counter extends Component {
     console.log("[counter] Inside the handleReset method");
     this.setState({ count: 0 });
   };
+  onDelete = () => this.props.handleDelete(this.props.counter.id);
   formatCount = () => {
     const { count } = this.state;
     return count === 0 ? "Zero" : "Decrement";
@@ -32,7 +33,6 @@ class Counter extends Component {
     fontSize: 50,
     fontWeight: "bold"
   };
-
   renderTags = () => {
     const { tags } = this.state;
     return tags && tags.length !== 0 ? (
@@ -77,6 +77,7 @@ class Counter extends Component {
         <button className="btn btn-primary btn-sm" onClick={this.handleReset}>
           Reset
         </button>
+        <button onClick={this.onDelete} className="btn btn-danger btn-sm">Delete</button>
       </div>
     );
   }
