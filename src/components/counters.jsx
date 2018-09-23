@@ -13,6 +13,18 @@ export default class Counters extends Component {
       { id: 4, value: 0 }
     ]
   };
+  howManyCounters = () => {
+    if(this.state.counters.length){
+      return(
+        <h1>Showing {this.state.counters.length} results</h1>
+      );
+    }else {
+      return(
+        <h1>There are no counters left!</h1>
+      )
+    }
+    
+  }
   handleDelete = id => {
     console.log("Event handler called");
     const counters = this.state.counters.filter(c => c.id !== id);
@@ -56,9 +68,10 @@ export default class Counters extends Component {
     const { counters } = this.state;
     return (
       <div>
-        <button onClick={this.handleAllReset} className="btn btn-primary sm-2">
+        {this.howManyCounters()}
+        {counters.length !== 0 && (<button onClick={this.handleAllReset} className="btn btn-primary sm-2">
           Reset All Counters
-        </button>
+        </button>)}
         {counters.map(counter => (
           <Counter
             key={counter.id}
