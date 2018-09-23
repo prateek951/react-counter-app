@@ -13,19 +13,65 @@ export default class Counters extends Component {
       { id: 4, value: 0 }
     ]
   };
-  handleDelete = (id) => {
-    console.log('Event handler called');
+  handleDelete = id => {
+    console.log("Event handler called");
     const counters = this.state.counters.filter(c => c.id !== id);
-    this.setState({counters});
+    this.setState({ counters });
+  };
+  handleIncrement = counter => {
+    console.log("[Counters] inside the handleIncrement method");
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = Object.assign({}, counter);
+    counters[index].value++;
+    this.setState({ counters });
+  };
+  handleDecrement = counter => {
+    console.log("[Counters] inside the handleDecrement method");
+    const counters = this.state.counters.slice();
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+    if (counters[index].value > 0) {
+      counters[index].value--;
     }
+    this.setState({ counters });
+  };
+  handleAllReset = () => {
+    console.log('[Counters] inside the handleAllReset method');
+    const counters = this.state.counters.map(c => {
+      c.value = 0;
+      return c;
+    });
+    this.setState({ counters });
+  };
+  handleReset = counter => {
+    const counters = [...this.state.counters];
+    const ctrindex = counters.indexOf(counter);
+    counters[ctrindex] = Object.assign({}, counter);
+    counters[ctrindex].value = 0;
+    this.setState({ counters });
+  };
 
   render() {
     const { counters } = this.state;
     return (
       <div>
-        {counters.map(counter => <Counter key={counter.id}  handleDelete={this.handleDelete} counter={counter}>
-            <h4>Counter #{counter.id}</h4>
-        </Counter>)}
+        <button onClick={this.handleAllReset} className="btn btn-primary sm-2">
+          Reset All Counters
+        </button>
+        {counters.map(counter => (
+          <Counter
+            key={counter.id}
+            handleDelete={this.handleDelete}
+            handleIncrement={this.handleIncrement}
+            handleDecrement={this.handleDecrement}
+            handleAllReset={this.handleAllReset}
+            handleReset={this.handleReset}
+            counter={counter}
+          >
+
+          </Counter>
+        ))}
       </div>
     );
   }

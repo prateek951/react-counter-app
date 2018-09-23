@@ -2,33 +2,44 @@ import React, { Component } from "react";
 
 class Counter extends Component {
   state = {
-    count: this.props.counter.value,
     imageUrl: "https://picsum.photos/200",
     tags: ["tag1", "tag2", "tag3"]
   };
+  // handleIncrement = () => {
+  //   console.log("[counter] Inside the handleIncrement method");
+  //   const { count } = this.state;
+  //   this.setState({ count: count + 1 });
+  // };
+  // handleDecrement = () => {
+  //   const { count } = this.state;
+  //   console.log("[counter] Inside the handleDecrement method");
+  //   if (count === 0) {
+  //     return;
+  //   } else {
+  //     this.setState({ count: count - 1 });
+  //   }
+  // };
+  // handleReset = () => {
+  //   console.log("[counter] Inside the handleReset method");
+  //   this.setState({ count: 0 });
+  // };
   handleIncrement = () => {
-    console.log("[counter] Inside the handleIncrement method");
-    const { count } = this.state;
-    this.setState({ count: count + 1 });
-  };
+    this.props.handleIncrement(this.props.counter);
+  }
   handleDecrement = () => {
-    const { count } = this.state;
-    console.log("[counter] Inside the handleDecrement method");
-    if (count === 0) {
-      return;
-    } else {
-      this.setState({ count: count - 1 });
-    }
-  };
-  handleReset = () => {
-    console.log("[counter] Inside the handleReset method");
-    this.setState({ count: 0 });
-  };
+    this.props.handleDecrement(this.props.counter);
+  } 
+  handleAllReset = () => {
+    this.props.handleAllReset();
+  }
   onDelete = () => this.props.handleDelete(this.props.counter.id);
   formatCount = () => {
-    const { count } = this.state;
+    const count = this.props.counter.value;
     return count === 0 ? "Zero" : "Decrement";
   };
+  handleReset = () => {
+    this.props.handleReset(this.props.counter);
+  }
   styles = {
     fontSize: 50,
     fontWeight: "bold"
@@ -45,13 +56,14 @@ class Counter extends Component {
   render() {
     //JSX expressions must have one parent element
     //   React.createElement('div')
-    const { count, imageUrl, tags } = this.state;
-    const { children } = this.props;
+    const { imageUrl, tags } = this.state;
+    const count = this.props.counter.value;
+    const { id } = this.props.counter;
     console.log("[Counter] Counters => Props => Counter", this.props);
     return (
       <div>
         <div className="text-center">
-          {children}
+          <h4>Counter #{id}</h4>
           <h1 style={this.styles} className={this.getBadgeClasses(count)}>
             {count}
           </h1>
