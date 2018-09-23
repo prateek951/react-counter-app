@@ -2,21 +2,11 @@ import React, { Component } from "react";
 import Counter from "./counter";
 
 export default class Counters extends Component {
-  state = {
-    counters: [
-      { id: 1, value: 0 },
-      { id: 2, value: 0 },
-      {
-        id: 3,
-        value: 0
-      },
-      { id: 4, value: 0 }
-    ]
-  };
+
   howManyCounters = () => {
-    if(this.state.counters.length){
+    if(this.props.counters.length){
       return(
-        <h1>Showing {this.state.counters.length} results</h1>
+        <h1>Showing {this.props.counters.length} results</h1>
       );
     }else {
       return(
@@ -26,46 +16,23 @@ export default class Counters extends Component {
     
   }
   handleDelete = id => {
-    console.log("Event handler called");
-    const counters = this.state.counters.filter(c => c.id !== id);
-    this.setState({ counters });
+    this.props.handleDelete(id);
   };
   handleIncrement = counter => {
-    console.log("[Counters] inside the handleIncrement method");
-    const counters = [...this.state.counters];
-    const index = counters.indexOf(counter);
-    counters[index] = Object.assign({}, counter);
-    counters[index].value++;
-    this.setState({ counters });
+    this.props.handleIncrement(counter);
   };
   handleDecrement = counter => {
-    console.log("[Counters] inside the handleDecrement method");
-    const counters = this.state.counters.slice();
-    const index = counters.indexOf(counter);
-    counters[index] = { ...counter };
-    if (counters[index].value > 0) {
-      counters[index].value--;
-    }
-    this.setState({ counters });
+    this.props.handleDecrement(counter);
   };
   handleAllReset = () => {
-    console.log('[Counters] inside the handleAllReset method');
-    const counters = this.state.counters.map(c => {
-      c.value = 0;
-      return c;
-    });
-    this.setState({ counters });
+    this.props.handleAllReset();
   };
   handleReset = counter => {
-    const counters = [...this.state.counters];
-    const ctrindex = counters.indexOf(counter);
-    counters[ctrindex] = Object.assign({}, counter);
-    counters[ctrindex].value = 0;
-    this.setState({ counters });
+    this.props.handleReset(counter);
   };
 
   render() {
-    const { counters } = this.state;
+    const { counters } = this.props;
     return (
       <div>
         {this.howManyCounters()}
