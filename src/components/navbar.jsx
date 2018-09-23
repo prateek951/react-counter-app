@@ -1,15 +1,14 @@
-import React, { Component } from 'react'
+import React from "react";
 
-class Navbar extends Component {
-  render() {
-    const { ctrslength } = this.props;
-    return (
-      <nav className="navbar navbar-light bg-light">
-        <a className="navbar-brand">Counter</a>
-        <p> Counters: {ctrslength}</p>
-      </nav>
-    )
-  }
-}
+const Navbar = ({ ctrslength }) => {
+  return (
+    <nav className="navbar navbar-light bg-light">
+      <a className="navbar-brand">
+        Counter{" "}
+        <span className="badge badge-pill badge-secondary">{ctrslength}</span>
+      </a>
+    </nav>
+  );
+};
 
 export default Navbar;
