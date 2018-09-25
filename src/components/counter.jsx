@@ -83,6 +83,7 @@ class Counter extends Component {
         <button
           className="btn btn-secondary btn-sm"
           onClick={this.handleDecrement}
+          disabled={this.props.counter.value === 0 ? true : false}
         >
           {this.formatCount()}
         </button>
